@@ -6,7 +6,7 @@ require("dotenv").config();
  */
 exports.up = async function (knex) {
   return await knex.schema.createTable("producto", (table) => {
-    table.increments("id").primary();
+    table.string("id").primary().unique();
     table.string("nombre").notNullable();
     table.text("descripcion");
     table.decimal("precio", 10, 2).notNullable();
