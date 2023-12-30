@@ -6,17 +6,21 @@ const {
   getProductoById,
   updateProducto,
 } = require("../controllers/productos");
+const {
+  validateCreateProduct,
+  validateUpdateProduct,
+} = require("../helpers/validations/handleValidateProducto");
 
 const router = express.Router();
 
-router.get("/productos", getAllProductos);
+router.get("/", getAllProductos);
 
-router.get("/productos/:id", getProductoById);
+router.get("/:id", getProductoById);
 
-router.post("/productos", createProducto);
+router.post("/", validateCreateProduct, createProducto);
 
-router.put("/productos/:id", updateProducto);
+router.put("/:id", validateUpdateProduct, updateProducto);
 
-router.delete("/productos/:id", deleteProducto);
+router.delete("/:id", deleteProducto);
 
 module.exports = router;

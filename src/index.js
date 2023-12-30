@@ -1,13 +1,15 @@
 const express = require("express");
-const router = require("./routes/productos");
+const routerProductos = require("./routes/productos");
 const Knex = require("knex");
-const knexConfig = require("../knexfile");
+const cors = require("cors");
+const env = process.env.NODE_ENV || "development";
+const knexConfig = require("../knexfile")[env];
 const { Model } = require("objection");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const connection = Knex(knexConfig.development);
+const connection = Knex(knexConfig);
 Model.knex(connection);
 
 connection
@@ -20,8 +22,9 @@ connection
   });
 
 app.use(express.json());
-app.use("/api", router);
+app.use(cors());
+app.use("/api/productos", routerProductos);
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
